@@ -10,7 +10,9 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
+import postRoutes from './routes/posts.js';
 import { register } from './controllers/auth.js';
+import { verifyToken } from './middleware/auth.js';
 
 // CONFIGURATIONS
 
@@ -28,6 +30,7 @@ app.use(cors());
 app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 
 // FILE STORAGE
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/assets');
@@ -42,11 +45,13 @@ const upload = multer({ storage });
 // ROUTES WITH FILES
 
 app.post('/auth/register', upload.single('picture'), register);
+app.post('/posts', verifyToken, upload.single('picture'), createPost);
 
 // ROUTES
 
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
+app.use('/posts', postRoutes);
 
 // MONGOOSE SETUP
 
