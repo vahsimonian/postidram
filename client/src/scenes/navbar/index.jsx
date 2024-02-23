@@ -41,7 +41,18 @@ const Navbar = () => {
 
   const fullName = `${user.firstName} ${user.lastName}`;
 
-  return <FlexBetween padding="1rem 6%" backgroundColor={alt}></FlexBetween>;
+  return (
+    <FlexBetween padding="1rem 6%" backgroundColor={alt}>
+      <FlexBetween>
+        <Typography
+          fontWeight={'bold'}
+          fontSize={'clamp(1rem, 2rem, 2.  25rem)'}
+        >
+          Socipedia
+        </Typography>
+      </FlexBetween>
+    </FlexBetween>
+  );
 };
 
 export default Navbar;
